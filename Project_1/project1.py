@@ -32,3 +32,37 @@ def extract_body(html):
     text = " ".join(text.split())
 
     return text
+
+def extract_links(html, base_url):
+    soup = BeautifulSoup(html, "html.parser")
+    all_links = []
+
+    for link in soup.find_all("a"):
+        href = link.get("href")
+        if href is None:
+            continue   
+        if href.startswith("#"):
+            continue
+        full_link = urljoin(base_url, href)
+        if full_link.startswith("http"):
+            all_links.append(full_link)
+
+    return all_links
+
+def get_words_list(text):
+    words = re.findall(r"[a-zA-Z0-9]+", text.lower())
+    return words
+
+def cal_frequency(text):
+    words = get_words_list(text)
+    frequency = {}
+
+    for word in words:
+        if word in frequency:
+            frequency[word] += 1
+        else:
+            frequency[word] = 1
+    return frequency
+
+
+
