@@ -12,24 +12,19 @@ def fetch_page(url):
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-
     driver = webdriver.Chrome(
         service=Service(ChromeDriverManager().install()),
         options=options
     )
-
     driver.get(url)
     time.sleep(3)
-
     html = driver.page_source
     driver.quit()
-
     return html
 
 def extract_title(html):
     soup = BeautifulSoup(html, "html.parser")
     title_tag = soup.find("title")
-
     if title_tag:
         return title_tag.text.strip()
     else:
@@ -48,7 +43,6 @@ def extract_body(html):
 def extract_links(html, base_url):
     soup = BeautifulSoup(html, "html.parser")
     all_links = []
-
     for link in soup.find_all("a"):
         href = link.get("href")
         if href is None:
@@ -65,7 +59,6 @@ def get_words_list(text):
     text = text.lower()
     words = []
     current_word = ""
-
     for char in text:
         if char.isalnum():
             current_word += char
@@ -82,7 +75,6 @@ def get_words_list(text):
 def cal_frequency(text):
     words = get_words_list(text)
     frequency = {}
-
     for word in words:
         if word in frequency:
             frequency[word] += 1
@@ -95,18 +87,13 @@ def process_single(url):
     title = extract_title(html)
     body = extract_body(html)
     links = extract_links(html, url)
-
     frequency = cal_frequency(body)
-
     print("\nWebsite Title:", title)
-
     print("\nFirst 1000 characters of body:")
     print(body[:1000])
-
     print("\nTotal Links Found:", len(links))
     for i in range(len(links)):
         print(i + 1, links[i])
-
 
 def normalize_url(url):
     if not url.startswith("http://") and not url.startswith("https://"):
@@ -121,8 +108,6 @@ def main():
     else:
         print("Usage:")
         print("python project.py <URL>")
-        print("python project.py <URL1> <URL2>")
-
 
 if __name__ == "__main__":
     main()
