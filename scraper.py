@@ -12,10 +12,7 @@ def fetch_page(url):
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()),
-        options=options
-    )
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
     time.sleep(3)
     html = driver.page_source
@@ -103,7 +100,6 @@ def main():
     if len(sys.argv) == 2:
         url = normalize_url(sys.argv[1])
         process_single(url)
-
     else:
         print("Usage:")
         print("python project.py <URL>")
