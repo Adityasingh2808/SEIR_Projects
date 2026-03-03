@@ -91,18 +91,17 @@ def process_single(url):
     for i in range(len(links)):
         print(i + 1, links[i])
 
-def normalize_url(url):
+def valid_url(url):
     if not url.startswith("http://") and not url.startswith("https://"):
         url = "https://" + url
     return url
 
 def main():
     if len(sys.argv) == 2:
-        url = normalize_url(sys.argv[1])
+        url = valid_url(sys.argv[1])
         process_single(url)
     else:
-        print("Usage:")
-        print("python project.py <URL>")
+        print("Use : python project.py <URL>")
 
 if __name__ == "__main__":
     main()
