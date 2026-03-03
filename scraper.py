@@ -87,7 +87,6 @@ def process_single(url):
     title = extract_title(html)
     body = extract_body(html)
     links = extract_links(html, url)
-    frequency = cal_frequency(body)
     print("\nWebsite Title:", title)
     print("\nFirst 1000 characters of body:")
     print(body[:1000])
